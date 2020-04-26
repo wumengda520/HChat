@@ -4,6 +4,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.sctp.nio.NioSctpServerChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 /**
  * @Descripation:
@@ -22,7 +23,10 @@ public class WebSocketServer {
         try {
             // 创建服务器启动器
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(mainGroup, subGroup).channel(NioSctpServerChannel.class).childHandler(new WsServerInitializer());
+            serverBootstrap
+                    .group(mainGroup, subGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new WsServerInitializer());
 
             // 绑定端口号启动服务器，并等待服务器启动
             // channelFuture 是Netty的回调消息
